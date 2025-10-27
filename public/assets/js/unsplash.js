@@ -14,7 +14,7 @@ async function searchUnsplashImages(query) {
 		data.results.forEach(({ urls, description, alt_description, user }) => {
 			const imgWrapper = document.createElement('div');
 			imgWrapper.className = 'unsplash-wrapper aspect-square rounded-2xl w-full p-3';
-			imgWrapper.style.border = `3px dashed ${DASHED_COLOR}`;
+			imgWrapper.style.border = `1px solid #333333`;
 	
 			const img = document.createElement('img');
 			img.src = urls.small;
