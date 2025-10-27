@@ -1,7 +1,7 @@
 {
   "name": "Freefy Cover Maker",
   "short_name": "Freefy",
-  "description": "Freefy Cover Maker is a web application that allows you to easily create playlist cover art in the style of Apple Music.",
+  "description": "Freefy Cover Maker is a tool that allows you to easily create stunning cover art for your Freefy playlists.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#121212",
