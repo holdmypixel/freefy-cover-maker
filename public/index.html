@@ -6,20 +6,20 @@
 	<title>Freefy Cover Maker</title>
 	<meta name="description" content="Freefy Cover Maker is a web application that allows you to easily create playlist cover art in the style of Apple Music." />
 
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-8YN62J47G5"></script>
-	<script src="/assets/js/analytics.js"></script>
-	<meta name="google-site-verification" content="TSU4jh-DtyPQt63JRpivnLAKbx2OtJg37OVvd0qD9UQ" />
-
+	<!-- Google Analytics - Commented out for local development -->
+	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-8YN62J47G5"></script> -->
+	<!-- <script src="/assets/js/analytics.js"></script> -->
+	
 	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 	<link rel="stylesheet" href="/assets/css/style.css" />
 	<link rel="stylesheet" href="/assets/css/toggle.css" />
 
-	<link rel="icon" type="image/png" sizes="16x16" href="/assets/icon/favicon-16x16.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/assets/icon/favicon-96x96.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-icon-180x180.png">
-	<link rel="manifest" href="/assets/icon/manifest.json">
+	<link rel="icon" href="/favicon.ico" sizes="any">
+	<link rel="icon" type="image/png" sizes="192x192" href="/assets/icon/web/icon-192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="/assets/icon/web/icon-512.png">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="manifest" href="/manifest.json">
 </head>
 
 <body class="bg-black text-white min-h-screen">
@@ -187,6 +187,19 @@
 	<script>
 		// Auto-update current year
 		document.getElementById('current-year').textContent = new Date().getFullYear();
+		
+		// Register Service Worker
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', () => {
+				navigator.serviceWorker.register('/sw.js')
+					.then((registration) => {
+						console.log('SW registered: ', registration);
+					})
+					.catch((registrationError) => {
+						console.log('SW registration failed: ', registrationError);
+					});
+			});
+		}
 	</script>
 
 	<script src="/assets/js/unsplash.js"></script>
