@@ -166,7 +166,7 @@ function renderWarnings(username, title, subtitle, footer) {
 	footerWarning.innerText = footer.length > WARNING_LENGTH ? '⚠️ Warning, detected long text.' : '';
 }
 
-const DEFAULT_USERNAME = 'Music';
+const DEFAULT_USERNAME = 'Freefy';
 const FREEFY_LOGO_WHITE_URL = '/assets/images/freefy-logo-white.svg';
 const FREEFY_LOGO_BLACK_URL = '/assets/images/freefy-logo-black.svg';
 let freefyLogoWhiteImage = null;
@@ -524,6 +524,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 	if (grainStrengthSlider) {
 		grainStrengthSlider.addEventListener('input', updateGrainSliderUI);
 		updateGrainSliderUI();
+	}
+
+	// Freefy logo color selector visibility
+	const freefyLogoToggle = document.getElementById('useFreefyLogo');
+	const freefyLogoColorContainer = document.getElementById('freefyLogoColorContainer');
+	
+	function updateLogoColorVisibility() {
+		if (freefyLogoColorContainer && freefyLogoToggle) {
+			if (freefyLogoToggle.checked) {
+				freefyLogoColorContainer.style.display = 'block';
+			} else {
+				freefyLogoColorContainer.style.display = 'none';
+			}
+		}
+	}
+
+	if (freefyLogoToggle) {
+		freefyLogoToggle.addEventListener('change', updateLogoColorVisibility);
+		updateLogoColorVisibility(); // Initialize
 	}
 });
 

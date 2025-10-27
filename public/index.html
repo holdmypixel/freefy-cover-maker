@@ -54,7 +54,7 @@
 				</select>
 				<div></div>
 
-				<input type="text" id="username" placeholder="@username (optional)" />
+				<input type="text" id="username" placeholder="freefy" />
 				<div id="usernameWarning"></div>
 
 				<div class="checkbox-wrapper">
@@ -68,11 +68,13 @@
 					</label>
 				</div>
 
-				<select id="freefyLogoColor" class="w-full text-white p-2 rounded">
-					<option value="auto">Auto (based on background)</option>
-					<option value="white">White Logo</option>
-					<option value="black">Black Logo</option>
-				</select>
+				<div id="freefyLogoColorContainer">
+					<select id="freefyLogoColor" class="w-full text-white p-2 rounded">
+						<option value="auto">Auto (based on background)</option>
+						<option value="white">White Logo</option>
+						<option value="black">Black Logo</option>
+					</select>
+				</div>
 
 				<input type="text" id="title" placeholder="Main Title" />
 				<div id="titleWarning"></div>
@@ -124,7 +126,7 @@
 				<select id="format" class="w-full text-white p-2 rounded">
 					<option value="png">.png</option>
 					<option value="jpg">.jpeg</option>
-					<option value="webp">.webp</option>
+					<option value="webp" selected>.webp</option>
 				</select>
 
 				<button id="download-btn" onclick="download()">Download</button>
@@ -179,8 +181,13 @@
 	</container>
 
 	<footer id="copyright">
-		© 2025. <a href="https://github.com/devhaaana" target="_blank" rel="noopener noreferrer">devhaaana</a>. All rights reserved.
+		&copy; <span id="current-year"></span> <a href="https://cover-maker.freefy.app" target="_blank" rel="noopener noreferrer">Freefy Cover Maker</a>.
 	</footer>
+
+	<script>
+		// Auto-update current year
+		document.getElementById('current-year').textContent = new Date().getFullYear();
+	</script>
 
 	<script src="/assets/js/unsplash.js"></script>
 	<script src="/assets/js/script.js"></script>
