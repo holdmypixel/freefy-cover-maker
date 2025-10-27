@@ -16,7 +16,7 @@
 	-ms-flex-align: center;
 
 	align-items: center;
-	color: #78768d;
+	color: #B0B0B0;
 	cursor: pointer;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -49,7 +49,7 @@
 .checkbox-wrapper .useShadow + label::before,
 .checkbox-wrapper .useBlur + label::before,
 .checkbox-wrapper .useGrain + label::before {
-	background-color: #05012c;
+	background-color: #2A2A2A;
 	border-radius: 500px;
 	width: 40px;
 	height: 20px;
@@ -63,7 +63,7 @@
 .checkbox-wrapper .useBlur + label::after,
 .checkbox-wrapper .useGrain + label::after {
 	background-color: #fff;
-	border-radius: 13px;
+	border-radius: 10px;
 	box-shadow: 0 3px 1px 0 rgba(37, 34, 71, 0.05), 0 2px 2px 0 rgba(37, 34, 71, 0.1), 0 3px 3px 0 rgba(37, 34, 71, 0.05);
 	position: absolute;
 	width: 18px;
@@ -106,7 +106,7 @@
 .checkbox-wrapper .useShadow .switch-x-checked,
 .checkbox-wrapper .useBlur .switch-x-checked,
 .checkbox-wrapper .useGrain .switch-x-checked {
-  color: #34A853;
+  color: #D75461;
   /* color: #FBBC05; */
   /* color: #EA4335; */
 }
@@ -154,7 +154,7 @@
 .checkbox-wrapper .useShadow:checked + useShadow::before,
 .checkbox-wrapper .useBlur:checked + useBlur::before,
 .checkbox-wrapper .useGrain:checked + useBlur::before {
-	background-color: #ffb500;
+	background-color: #D75461;
 }
 .checkbox-wrapper .switch:checked + label::after,
 .checkbox-wrapper .useShadow:checked + useShadow::after,
@@ -194,7 +194,7 @@
 	display: inline-block;
 	width: 20%;
 	text-align: right;
-	color: #ffb500;
+	color: #D75461;
 }
 
 input[type="range"]#grainStrength {
@@ -204,12 +204,12 @@ input[type="range"]#grainStrength {
 	height: 6px;
 	background: linear-gradient(
 		to right,
-		#ffb500 0%,
-		#ffb500 calc(var(--value) * 1%),
+		#D75461 0%,
+		#D75461 calc(var(--value) * 1%),
 		#444 calc(var(--value) * 1%),
 		#444 100%
 	);
-	border-radius: 5px;
+	border-radius: 4px;
 	outline: none;
 	cursor: pointer;
 }
@@ -220,7 +220,7 @@ input[type="range"]#grainStrength::-webkit-slider-thumb {
 	appearance: none;
 	width: 16px;
 	height: 16px;
-	background: #ffb500;
+	background: #D75461;
 	border-radius: 50%;
 	border: 2px solid #fff;
 	box-shadow: 0 0 4px rgba(0,0,0,0.3);
@@ -228,14 +228,14 @@ input[type="range"]#grainStrength::-webkit-slider-thumb {
 }
 
 input[type="range"]#grainStrength::-webkit-slider-thumb:hover {
-	background: #ffb500;
+	background: #D75461;
 }
 
 /* Firefox */
 input[type="range"]#grainStrength::-moz-range-thumb {
 	width: 16px;
 	height: 16px;
-	background: #ffb500;
+	background: #D75461;
 	border-radius: 50%;
 	border: 2px solid #fff;
 	cursor: pointer;
@@ -245,5 +245,5 @@ input[type="range"]#grainStrength::-moz-range-thumb {
 input[type="range"]#grainStrength::-moz-range-track {
 	background: #444;
 	height: 6px;
-	border-radius: 5px;
+	border-radius: 4px;
 }

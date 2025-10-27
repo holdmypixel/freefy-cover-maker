@@ -422,7 +422,7 @@ document.getElementById('imageUpload').addEventListener('change', function (e) {
 let imagePicker, container, imageTitle, imageSource, imageAuthor;
 let canvasLoadingOverlay;
 let grainCheckbox, grainStrengthContainer, grainStrengthSlider, grainStrengthValue;
-const DASHED_COLOR = '#3a3a3a'
+const BORDER_COLOR = '#333333'
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -502,10 +502,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	const buttons = document.querySelectorAll('.theme-button');
     buttons.forEach(btn => {
-		btn.style.border = `3px dashed ${DASHED_COLOR}`;
+		btn.style.border = `1px solid ${BORDER_COLOR}`;
 		btn.addEventListener('click', () => {
-			buttons.forEach(b => b.style.border = `3px dashed ${DASHED_COLOR}`);
-			btn.style.border = '3px dashed #4285F4';
+			buttons.forEach(b => b.style.border = `1px solid ${BORDER_COLOR}`);
+			btn.style.border = '1px solid #D75461';
 		});
     });
 
@@ -617,7 +617,7 @@ function loadDefaultImages() {
 	defaultImagePaths.forEach(({ preview, original }) => {
 		const imgWrapper = document.createElement('div');
 		imgWrapper.className = 'img-wrapper rounded-2xl w-full p-3';
-		imgWrapper.style.border = `3px dashed ${DASHED_COLOR}`;
+		imgWrapper.style.border = `1px solid ${BORDER_COLOR}`;
 		
 		const img = document.createElement('img');
 		img.src = preview;
@@ -634,7 +634,7 @@ function loadDefaultImages() {
 		colorSelector.style.width = imagePickerWidth;
 		colorPicker.style.width = imagePickerWidth;
 		filePicker.style.width = imagePickerWidth;
-		filePicker.style.border = `3px dashed ${DASHED_COLOR}`;
+		filePicker.style.border = `1px solid ${BORDER_COLOR}`;
 	});
 }
 
@@ -650,7 +650,7 @@ function loadDefaultColors() {
 	defaultColorOptions.forEach((color) => {
 		const colorWrapper = document.createElement('div');
 		colorWrapper.className = 'color-wrapper rounded-2xl w-full p-3';
-		colorWrapper.style.border = `3px dashed ${DASHED_COLOR}`;
+		colorWrapper.style.border = `1px solid ${BORDER_COLOR}`;
 		
 		const colorBox = document.createElement('div');
 		colorBox.className = 'rounded-xl w-full aspect-square object-cover hover:scale-105 transition-transform cursor-pointer';
@@ -666,7 +666,7 @@ function loadDefaultColors() {
 		colorSelector.style.width = imagePickerWidth;
 		colorPicker.style.width = imagePickerWidth;
 		filePicker.style.width = imagePickerWidth;
-		filePicker.style.border = `3px dashed ${DASHED_COLOR}`;
+		filePicker.style.border = `1px solid ${BORDER_COLOR}`;
 	});
 }
 
@@ -687,7 +687,7 @@ window.onload = () => {
 	if (container && !container.parentElement.classList.contains('thumbnail-wrapper')) {
 		const wrapper = document.createElement('div');
 		wrapper.className = 'thumbnail-wrapper rounded-2xl w-30 h-30 p-3';
-		wrapper.style.border = `3px dashed ${DASHED_COLOR}`;
+		wrapper.style.border = `1px solid ${BORDER_COLOR}`;
 		container.parentElement.insertBefore(wrapper, container);
 		wrapper.appendChild(container);
 	}
