@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,9 +12,6 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/assets/css/style.css" />
 	<link rel="stylesheet" href="/assets/css/toggle.css" />
 
@@ -25,215 +22,165 @@
 	<link rel="manifest" href="/assets/icon/manifest.json">
 </head>
 
-<body>
-	<!-- Theme Toggle -->
-	<div class="theme-toggle">
-		<button id="lightTheme" class="theme-btn" title="Switch to light theme">
-			<i class="fas fa-sun"></i>
-		</button>
-		<button id="darkTheme" class="theme-btn active" title="Switch to dark theme">
-			<i class="fas fa-moon"></i>
-		</button>
-	</div>
-
-	<!-- Main Layout -->
-	<div class="flex h-screen">
-		<!-- Left Sidebar -->
-		<div class="sidebar w-80 p-6">
-			<!-- Header -->
-			<div class="mb-8">
-				<h1 class="text-2xl font-bold">Freefy Cover Maker</h1>
-				<p class="text-sm subtitle-text">Create stunning playlist covers</p>
+<body class="bg-black text-white min-h-screen">
+	<container class="flex flex-col md:flex-row h-full">
+		<!-- 좌측 패널 -->
+		<div id="left-panel">
+			<!-- 이미지 미리보기 -->
+			<div id="image-panel">
+				<div id="canvasLoadingOverlay" class="hidden">Loading full-resolution image...</div>
+				<canvas id="cover" width="600" height="600"></canvas>
+				<!-- <div id="canvas-wrapper">
+					<canvas id="cover" width="600" height="600"></canvas>
+				</div> -->
 			</div>
 
-			<!-- Theme Selection -->
-			<div class="form-group">
-				<label class="form-label">Theme</label>
-				<select id="themeSelect" class="apple-select" title="Select cover theme">
+			<!-- 미리보기 하단 썸네일 및 정보 -->
+			<div id="image-info">
+				<div id="mini-image-thumnail"></div>
+				<div>
+					<div id="imageTitle">Not selected yet</div>
+					<div id="imageSource">(Not selected yet)</div>
+					<div id="imageAuthor"></div>
+				</div>
+			</div>
+
+			<div id="image-options">
+				<select id="themeSelect">
 					<option>Modern</option>
 					<option>Normal</option>
 					<option>Essentials</option>
 					<option>Classic</option>
 				</select>
-			</div>
+				<div></div>
 
-			<!-- Text Content -->
-			<div class="form-group">
-				<label class="form-label">Username</label>
-				<input type="text" id="username" placeholder="@username (optional)" class="apple-input" />
-				<div id="usernameWarning" class="warning-text"></div>
-			</div>
+				<input type="text" id="username" placeholder="@username (Music if empty)" />
+				<div id="usernameWarning"></div>
 
-			<!-- Freefy Logo Options -->
-			<div class="form-group">
-				<div class="flex items-center justify-between mb-3">
-					<label class="form-label mb-0">Freefy Logo</label>
-					<label class="relative inline-flex items-center cursor-pointer" title="Toggle Freefy logo">
-						<input type="checkbox" id="useFreefyLogo" class="sr-only peer" checked title="Use Freefy logo">
-						<div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+				<!-- Freefy Logo Options -->
+				<div class="checkbox-wrapper">
+					<input class="switch" type="checkbox" id="useFreefyLogo" name="freefy-logo-switch" value="private" checked>
+					<label for="useFreefyLogo">
+						<span class="switch-x-text">Freefy Logo is </span>
+						<span class="switch-x-toggletext">
+							<span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Off</span>
+							<span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>On</span>
+						</span>
 					</label>
 				</div>
-				<select id="freefyLogoColor" class="apple-select" title="Select logo color">
+
+				<select id="freefyLogoColor">
 					<option value="auto">Auto (based on background)</option>
 					<option value="white">White Logo</option>
 					<option value="black">Black Logo</option>
 				</select>
-			</div>
 
-			<div class="form-group">
-				<label class="form-label">Title</label>
-				<input type="text" id="title" placeholder="Main Title" class="apple-input" />
-				<div id="titleWarning" class="warning-text"></div>
-			</div>
+				<input type="text" id="title" placeholder="Main Title" />
+				<div id="titleWarning"></div>
 
-			<div class="form-group">
-				<label class="form-label">Subtitle</label>
-				<input type="text" id="subtitle" placeholder="Subtitle" class="apple-input" />
-				<div id="subtitleWarning" class="warning-text"></div>
-			</div>
+				<input type="text" id="subtitle" placeholder="Subtitle" />
+				<div id="subtitleWarning"></div>
 
-			<div class="form-group">
-				<label class="form-label">Footer</label>
-				<input type="text" id="footer" placeholder="Footer" class="apple-input" />
-				<div id="footerWarning" class="warning-text"></div>
-			</div>
+				<input type="text" id="footer" placeholder="Footer" />
+				<div id="footerWarning"></div>
 
-			<!-- Effects -->
-			<div class="form-group">
-				<label class="section-title">Effects</label>
-				
-				<div class="flex items-center justify-between mb-3">
-					<span class="form-label mb-0">Shadow</span>
-					<label class="relative inline-flex items-center cursor-pointer" title="Toggle shadow effect">
-						<input type="checkbox" id="useShadow" class="sr-only peer" title="Add shadow effect">
-						<div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+				<div class="checkbox-wrapper">
+					<input class="switch" type="checkbox" id="useShadow" name="shadow-switch" value="private">
+					<label for="useShadow">
+						<span class="switch-x-text">Shadow is </span>
+						<span class="switch-x-toggletext">
+							<span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Off</span>
+							<span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>On</span>
+						</span>
 					</label>
 				</div>
 
-				<div class="flex items-center justify-between mb-3">
-					<span class="form-label mb-0">Blur</span>
-					<label class="relative inline-flex items-center cursor-pointer" title="Toggle blur effect">
-						<input type="checkbox" id="useBlur" class="sr-only peer" title="Add blur effect">
-						<div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+				<div class="checkbox-wrapper">
+					<input class="switch" type="checkbox" id="useBlur" name="blur-switch" value="private">
+					<label for="useBlur">
+						<span class="switch-x-text">Blur is </span>
+						<span class="switch-x-toggletext">
+							<span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Off</span>
+							<span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>On</span>
+						</span>
 					</label>
 				</div>
 
-				<div class="flex items-center justify-between mb-3">
-					<span class="form-label mb-0">Grain</span>
-					<label class="relative inline-flex items-center cursor-pointer" title="Toggle grain effect">
-						<input type="checkbox" id="useGrain" class="sr-only peer" title="Add grain effect">
-						<div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+				<div class="checkbox-wrapper">
+					<input class="switch" type="checkbox" id="useGrain" name="blur-switch" value="private">
+					<label for="useGrain">
+						<span class="switch-x-text">Grain is </span>
+						<span class="switch-x-toggletext">
+							<span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Off</span>
+							<span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>On</span>
+						</span>
 					</label>
 				</div>
 
-				<div id="grainStrengthContainer" class="hidden">
-					<label class="form-label">Grain Strength</label>
-					<div class="flex items-center gap-3">
-						<input type="range" id="grainStrength" min="0" max="100" value="20" class="flex-1" title="Grain Strength" />
-						<span id="grainStrengthValue" class="text-sm font-mono w-8">20</span>
-					</div>
+				<div id="grainStrengthContainer">
+					<input type="range" id="grainStrength" min="0" max="100" value="20" />
+					<span id="grainStrengthValue"></span>
 				</div>
-			</div>
 
-			<!-- Export -->
-			<div class="form-group">
-				<label class="form-label">Export Format</label>
-				<select id="format" class="apple-select mb-4" title="Select export format">
-					<option value="png">PNG</option>
-					<option value="jpg">JPEG</option>
-					<option value="webp">WebP</option>
+				<select id="format" class="w-full text-white p-2 rounded">
+					<option value="png">.png</option>
+					<option value="jpg">.jpeg</option>
 				</select>
-				<button id="download-btn" onclick="download()" class="apple-button w-full">
-					<i class="fas fa-download mr-2"></i>
-					Download Cover
-				</button>
+
+				<button id="download-btn" onclick="download()">Download</button>
 			</div>
 		</div>
+		
+		<!-- 우측 패널 -->
+		<div id="right-panel">
+			<div id="menu-btn">
+				<button id="default-img-btn" onclick="showImagePicker()" class="theme-button px-4 py-2 rounded">Default Image</button>
+				<button id="default-color-btn" onclick="showColorPicker()" class="theme-button px-4 py-2 rounded">Color Picker</button>
+				<button id="unsplash-img-btn" onclick="showUnsplashPicker()" class="theme-button px-4 py-2 rounded">Unsplash Search</button>
+				<button id="upload-img-btn" onclick="showFilePicker()" class="theme-button px-4 py-2 rounded">Self upload</button>
+			</div>
+			
+			<!-- 이미지 선택 -->
+			<div id="image-selector" class="row row-cols-5 g-2 mt-3 w-100 p-4 rounded-xl position-relative"></div>
 
-		<!-- Main Content -->
-		<div class="main-content flex-1 flex">
-			<!-- Canvas Area -->
-			<div class="flex-1 p-6 flex flex-col">
-				<div class="canvas-container flex-1 relative">
-					<div id="canvasLoadingOverlay" class="loading-overlay hidden">
-						<div class="flex items-center">
-							<i class="fas fa-spinner fa-spin mr-2"></i>
-							Loading full-resolution image...
-						</div>
-					</div>
-					<canvas id="cover" width="600" height="600"></canvas>
+			<!-- 컬러 선택 -->
+			<div id="color-selector" class="row row-cols-5 g-2 mt-3 w-100 p-4 rounded-xl position-relative"></div>
+			<div id="color-picker" class="hidden rounded-xl relative cursor-pointer flex flex-col items-center">
+				<div class="relative cursor-pointer select-none">
+					<div id="hexInput" class="flex items-center justify-center cursor-pointer"></div>
+					<button id="copyHexBtn" title="Copy HEX" class="absolute top-1/3 right-2 transform -translate-y-1/2 text-white hover:text-gray-300">
+					<i class="fa-solid fa-clipboard"></i>
+					</button>
 				</div>
-
-				<!-- Image Info -->
-				<div class="glass-card p-4 mt-6 flex items-center gap-4">
-					<div id="mini-image-thumnail" class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 image-thumbnail"></div>
-					<div class="flex-1 min-w-0">
-						<div id="imageTitle" class="font-semibold truncate">Not selected yet</div>
-						<div id="imageSource" class="text-sm truncate image-source">(Not selected yet)</div>
-						<div id="imageAuthor" class="text-xs truncate image-author"></div>
+				<div class="flex gap-4 justify-center w-full">
+					<div id="svContainer" style="position: relative; display: inline-block;">
+					<canvas id="svCanvas" width="400" height="200" style="border:1px solid #ccc; cursor:pointer;"></canvas>
+					<div id="svPointer"></div>
 					</div>
+					<canvas id="hueCanvas" width="30" height="200" style="border:1px solid #ccc; cursor:pointer;"></canvas>
 				</div>
 			</div>
 
-			<!-- Right Panel -->
-			<div class="w-80 p-6 border-l canvas-sidebar">
-				<!-- Tab Navigation -->
-				<div class="tab-buttons">
-					<button id="default-img-btn" onclick="showImagePicker()" class="tab-button active">
-						<i class="fas fa-image mr-2"></i>Images
-					</button>
-					<button id="default-color-btn" onclick="showColorPicker()" class="tab-button">
-						<i class="fas fa-palette mr-2"></i>Colors
-					</button>
-				</div>
-
-				<div class="tab-buttons mb-6">
-					<button id="unsplash-img-btn" onclick="showUnsplashPicker()" class="tab-button">
-						<i class="fas fa-search mr-2"></i>Unsplash
-					</button>
-					<button id="upload-img-btn" onclick="showFilePicker()" class="tab-button">
-						<i class="fas fa-upload mr-2"></i>Upload
-					</button>
-				</div>
-
-				<!-- Content Panels -->
-				<div id="image-selector" class="image-grid"></div>
-
-				<div id="color-selector" class="image-grid hidden"></div>
-				
-				<div id="color-picker" class="hidden">
-					<div class="glass-card p-4 mb-4">
-						<div id="hexInput" class="flex items-center justify-center cursor-pointer p-3 rounded-lg hex-input-display">
-							<span class="font-mono">#000000</span>
-							<button id="copyHexBtn" title="Copy HEX" class="ml-2">
-								<i class="fa-solid fa-clipboard"></i>
-							</button>
-						</div>
-					</div>
-					<div class="flex gap-4 justify-center">
-						<div id="svContainer" class="relative">
-							<canvas id="svCanvas" width="200" height="150" class="rounded-lg cursor-pointer"></canvas>
-							<div id="svPointer" class="absolute w-4 h-4 border-2 border-white rounded-full pointer-events-none"></div>
-						</div>
-						<canvas id="hueCanvas" width="20" height="150" class="rounded cursor-pointer"></canvas>
-					</div>
-				</div>
-
-				<div id="unsplash-searchBar" class="hidden mb-4">
-					<input type="text" id="unsplash-search" placeholder="Search Unsplash..." class="apple-input"/>
-				</div>
-				<div id="unsplash-selector" class="image-grid hidden"></div>
-
-				<div id="file-selector" class="hidden glass-card h-48 flex flex-col justify-center items-center relative cursor-pointer rounded-xl border-2 border-dashed file-upload-area">
-					<i class="fas fa-cloud-upload-alt text-4xl mb-4 upload-icon"></i>
-					<span class="text-center upload-text">
-						Drag and drop your file here<br>or click to upload
-					</span>
-					<input type="file" id="imageUpload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" title="Upload image file" />
-				</div>
+			<!-- Unsplash 이미지 선택 -->
+			<div id="unsplash-searchBar" class="row row-cols-5 g-2 mt-3 w-100 p-4 rounded-xl position-relative">
+				<input type="text" id="unsplash-search" placeholder="Type here to search on unsplash..."/>
 			</div>
+			<div id="unsplash-selector" class="row row-cols-5 g-2 mt-3 w-100 p-4 rounded-xl position-relative">
+
+			</div>
+
+			<!-- 파일 선택 -->
+			<div id="file-selector" class="h-64 hidden rounded-xl flex justify-center items-center relative cursor-pointer">
+				<span>Drag and drop your file here or click to upload</span>
+				<input type="file" id="imageUpload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+			</div>
+
 		</div>
-	</div>
+	</container>
+
+	<footer id="copyright">
+		© 2025. <a href="https://github.com/devhaaana" target="_blank" rel="noopener noreferrer">devhaaana</a>. All rights reserved.
+	</footer>
 
 
 
