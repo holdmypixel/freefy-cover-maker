@@ -166,63 +166,10 @@ function renderWarnings(username, title, subtitle, footer) {
 	footerWarning.innerText = footer.length > WARNING_LENGTH ? '⚠️ Warning, detected long text.' : '';
 }
 
-const DEFAULT_USERNAME = 'Music';
-const FREEFY_LOGO_WHITE_URL = '/assets/images/freefy-logo-white.svg';
-const FREEFY_LOGO_BLACK_URL = '/assets/images/freefy-logo-black.svg';
-let freefyLogoWhiteImage = null;
-let freefyLogoBlackImage = null;
-
-// Load Freefy logos
-function loadFreefyLogos() {
-	// Load white logo
-	if (!freefyLogoWhiteImage) {
-		freefyLogoWhiteImage = new Image();
-		freefyLogoWhiteImage.crossOrigin = 'anonymous';
-		freefyLogoWhiteImage.onload = () => {
-			render();
-		};
-		freefyLogoWhiteImage.onerror = () => {
-			console.warn('Failed to load Freefy white logo');
-		};
-		freefyLogoWhiteImage.src = FREEFY_LOGO_WHITE_URL;
-	}
-	
-	// Load black logo
-	if (!freefyLogoBlackImage) {
-		freefyLogoBlackImage = new Image();
-		freefyLogoBlackImage.crossOrigin = 'anonymous';
-		freefyLogoBlackImage.onload = () => {
-			render();
-		};
-		freefyLogoBlackImage.onerror = () => {
-			console.warn('Failed to load Freefy black logo');
-		};
-		freefyLogoBlackImage.src = FREEFY_LOGO_BLACK_URL;
-	}
-}
-
-// Get appropriate logo based on text color and user preference
-function getFreefyLogo(textColor) {
-	const logoColorSelect = document.getElementById('freefyLogoColor');
-	if (!logoColorSelect) return null;
-	
-	const selectedColor = logoColorSelect.value;
-	
-	if (selectedColor === 'auto') {
-		// Choose logo based on text color
-		return textColor === 'white' ? freefyLogoWhiteImage : freefyLogoBlackImage;
-	} else if (selectedColor === 'white') {
-		return freefyLogoWhiteImage;
-	} else {
-		return freefyLogoBlackImage;
-	}
-}
+const DEFAULT_USERNAME = 'Music';
 
 function renderTextContent(ctx, canvas, textColor, theme) {
-	const usernameInput = document.getElementById('username').value.trim();
-	const useFreefyLogo = document.getElementById('useFreefyLogo') ? document.getElementById('useFreefyLogo').checked : false;
-	const shouldUseLogo = useFreefyLogo && !usernameInput; // Use logo when toggle is on AND input is empty
-	const username = usernameInput || (shouldUseLogo ? '' : DEFAULT_USERNAME); // Use DEFAULT_USERNAME only when not using logo
+	const username = document.getElementById('username').value.trim() || DEFAULT_USERNAME;
 	const title = document.getElementById('title').value.trim();
 	const subtitle = document.getElementById('subtitle').value.trim();
 	const footer = document.getElementById('footer').value.trim();
@@ -234,17 +181,8 @@ function renderTextContent(ctx, canvas, textColor, theme) {
 	ctx.fillStyle = textColor;
 
 	if (theme == 'Modern') {
-		const logoImage = getFreefyLogo(textColor);
-		if (shouldUseLogo && logoImage && logoImage.complete) {
-			// Draw Freefy logo with same size as 40px font
-			const logoHeight = 40;
-			const logoWidth = (logoImage.width / logoImage.height) * logoHeight;
-			// Adjust vertical position to match text baseline (92 - font descent)
-			ctx.drawImage(logoImage, 64, 62, logoWidth, logoHeight);
-		} else {
-			ctx.font = '600 40px Pretendard, sans-serif';
-			TextLetterSpacing(ctx, username, 64, 92, 1.5, 'left');
-		}
+		ctx.font = '600 40px Pretendard, sans-serif';
+		TextLetterSpacing(ctx, username, 64, 92, 1.5, 'left');
 		ctx.font = '700 90px Pretendard, sans-serif';
 		TextLetterSpacing(ctx, title, 60, 208, -3);
 		ctx.font = '400 90px Pretendard, sans-serif';
@@ -254,17 +192,8 @@ function renderTextContent(ctx, canvas, textColor, theme) {
 		TextLetterSpacing(ctx, footer, 60, canvas.height - 70, 1);
 		ctx.globalAlpha = 1.0;
 	} else if (theme == 'Normal') {
-		const logoImage = getFreefyLogo(textColor);
-		if (shouldUseLogo && logoImage && logoImage.complete) {
-			// Draw Freefy logo with same size as 34px font
-			const logoHeight = 34;
-			const logoWidth = (logoImage.width / logoImage.height) * logoHeight;
-			// Adjust vertical position to match text baseline (50 - font descent)
-			ctx.drawImage(logoImage, canvas.width - 30 - logoWidth, 24, logoWidth, logoHeight);
-		} else {
-			ctx.font = '500 34px Pretendard, sans-serif';
-			TextLetterSpacing(ctx, username, canvas.width - 30, 50, 2, 'right');
-		}
+		ctx.font = '500 34px Pretendard, sans-serif';
+		TextLetterSpacing(ctx, username, canvas.width - 30, 50, 2, 'right');
 		ctx.font = '600 120px Pretendard, sans-serif';
 		TextLetterSpacing(ctx, title, canvas.width / 2, 310, -4, 'center');
 		ctx.font = '500 34px Pretendard, sans-serif';
@@ -297,34 +226,14 @@ function renderTextContent(ctx, canvas, textColor, theme) {
 		ctx.fillStyle = titleTextColor;
 
 		ctx.textAlign = 'left';
-		const logoImage = getFreefyLogo(titleTextColor);
-		if (shouldUseLogo && logoImage && logoImage.complete) {
-			// Draw Freefy logo with same size as 34px font
-			const logoHeight = 34;
-			const logoWidth = (logoImage.width / logoImage.height) * logoHeight;
-			// Adjust vertical position to match text baseline (50 - font descent)
-			ctx.drawImage(logoImage, canvas.width - 30 - logoWidth, 24, logoWidth, logoHeight);
-		} else {
-			ctx.font = '500 34px Pretendard, sans-serif';
-			TextLetterSpacing(ctx, username, canvas.width - 30, 50, 2, 'right');
-		}
+		ctx.font = '500 34px Pretendard, sans-serif';
+		TextLetterSpacing(ctx, username, canvas.width - 30, 50, 2, 'right');
 		ctx.font = '600 80px Pretendard, sans-serif';
 		TextLetterSpacing(ctx, titleText, 30, 160, 0, 'left');
 	} else if (theme == 'Classic') {
-		const logoImage = getFreefyLogo(textColor);
-		if (shouldUseLogo && logoImage && logoImage.complete) {
-			// Draw Freefy logo with "Classical" text below, same size as 34px font
-			const logoHeight = 34;
-			const logoWidth = (logoImage.width / logoImage.height) * logoHeight;
-			// Adjust vertical position to match text baseline (50 - font descent)
-			ctx.drawImage(logoImage, canvas.width - 30 - logoWidth, 24, logoWidth, logoHeight);
-			ctx.font = '500 34px Pretendard, sans-serif';
-			TextLetterSpacing(ctx, 'Classical', canvas.width - 30, 90, 2, 'right');
-		} else {
-			const classic_username = (username === DEFAULT_USERNAME || username === '') ? `${DEFAULT_USERNAME}\nClassical` : `${username}\nClassical`;
-			ctx.font = '500 34px Pretendard, sans-serif';
-			TextLetterSpacingMultiline(ctx, classic_username, canvas.width - 30, 50, 2, 40, 'right');
-		}
+		const classic_username = (username === DEFAULT_USERNAME || username === '') ? `${DEFAULT_USERNAME}\nClassical` : `${username}\nClassical`;
+		ctx.font = '500 34px Pretendard, sans-serif';
+		TextLetterSpacingMultiline(ctx, classic_username, canvas.width - 30, 50, 2, 40, 'right');
 		ctx.font = '600 80px Pretendard, sans-serif';
 		TextLetterSpacing(ctx, title, canvas.width / 2, ((canvas.height / 2) + 20), 0, 'center');
 	}
@@ -489,14 +398,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 		});
 	}
 
-	['username', 'title', 'subtitle', 'footer', 'themeSelect', 'useShadow', 'useBlur', 'useGrain', 'grainStrength', 'useFreefyLogo', 'freefyLogoColor'].forEach(id => {
+	['username', 'title', 'subtitle', 'footer', 'themeSelect', 'useShadow', 'useBlur', 'useGrain', 'grainStrength'].forEach(id => {
 		const input = document.getElementById(id);
 		if (input) {
 			input.addEventListener('input', render);
-			// Also listen for 'change' event for checkboxes and selects
-			if (input.type === 'checkbox' || input.tagName === 'SELECT') {
-				input.addEventListener('change', render);
-			}
 		}
     });
 
@@ -653,7 +558,6 @@ function loadDefaultColors() {
 
 window.onload = () => {
 	loadData();
-	loadFreefyLogos(); // Load the Freefy logos
 
 	const defaultBtn = document.getElementById('default-img-btn');
 	if (defaultBtn) {
