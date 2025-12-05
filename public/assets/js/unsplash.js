@@ -1,3 +1,5 @@
+const DASHED_COLOR = '#3a3a3a';
+
 async function searchUnsplashImages(query) {
 	if (!query) return;
   
@@ -14,7 +16,7 @@ async function searchUnsplashImages(query) {
 		data.results.forEach(({ urls, description, alt_description, user }) => {
 			const imgWrapper = document.createElement('div');
 			imgWrapper.className = 'unsplash-wrapper aspect-square rounded-2xl w-full p-3';
-			imgWrapper.style.border = `1px solid #333333`;
+			imgWrapper.style.border = `1px solid ${DASHED_COLOR}`;
 	
 			const img = document.createElement('img');
 			img.src = urls.small;
